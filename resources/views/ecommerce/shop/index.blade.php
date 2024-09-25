@@ -22,9 +22,9 @@
         </ol>
     </nav>
     <div class="container px-6 py-8 mx-auto">
-        <div class="lg:flex lg:-mx-2">
+        <div class="  lg:flex lg:-mx-2">
             <!-- Categories Sidebar -->
-            <div class="space-y-3 overflow-y-auto lg:w-1/5 lg:px-2 lg:space-y-4">
+            <div class="space-y-3 hidden sm:block overflow-y-auto lg:w-1/5 lg:px-2 lg:space-y-4">
                 @foreach ($allCategories as $category)
                     <a href="#" data-category-id="{{ $category->id }}" 
                        class="category-link block font-medium text-gray-500 dark:text-gray-300 hover:underline {{ request()->query('category') == $category->id ? 'text-blue-600 dark:text-blue-500' : '' }}">
@@ -85,7 +85,7 @@
             var categoryId = $(this).data('category-id');
 
             $.ajax({
-                url: "{{ route('ecommerce.index') }}",
+                url: "{{ route('ecommerce.shop') }}",
                 method: 'GET',
                 data: {
                     category: categoryId
@@ -103,5 +103,28 @@
             });
         });
     });
+    
+    $(document).ready(function() {
+        $('.add-to-cart').click(function(e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            
+            $.ajax({
+                url: '/add-to-cart/' + id,
+                method: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    $('#cart-count').text(response.cart_count);
+                    // alert(response.message);
+                },
+                error: function(response) {
+                    // alert('Failed to add item to cart.');
+                }
+            });
+        });
+    });
+
 </script>
 @endsection

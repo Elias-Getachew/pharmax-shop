@@ -47,7 +47,7 @@ class SaleController extends Controller
     foreach ($items as $itemData) {
         $medicine = Medicine::find($itemData['medicine_id']);
         if ($medicine->quantity < $itemData['quantity']) {
-            return redirect()->back()->with('error', "Not enough stock for medicine: {$medicine->name}");
+            return redirect()->back()->with('error', "Not enough stocks for medicine: {$medicine->name}");
         }
     }
 
@@ -82,7 +82,7 @@ class SaleController extends Controller
     // Update total amount of sale
     $sale->update(['total_amount' => $totalAmount]);
 
-    return redirect()->route('sales.index')->with('toast', 'Medicine successfully added.');
+    return redirect()->route('sales.index')->with('success', 'Medicine successfully added.');
 }
 
 

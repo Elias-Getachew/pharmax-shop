@@ -22,62 +22,177 @@
 
 </head>
 <body>
-    
-       <header class=" shadow-md top-0 z-50 fixed w-full mb-16 bg-white" id='nav'>
-        <div class="px-4 mx-auto sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16 lg:h-20">
-                <div class="flex-shrink-0">
-                    <a href="#" title="" class="flex">
-                        <img class="w-auto h-16" src="https://th.bing.com/th/id/R.47b05b1a9609e27246898478bc3dc5ad?rik=EYTJ7VM4PKfc4Q&pid=ImgRaw&r=0" alt="" />
+    @if (!request()->is('payment/success/*'))
+<header class="shadow-md top-0 z-50 fixed w-full mb-16 bg-white" id='nav'>
+    <div class="px-4 mx-auto sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16 lg:h-20">
+            <div class="flex-shrink-0">
+                <a href="#" title="" class="flex">
+                    <img class="w-auto h-16" src="https://th.bing.com/th/id/R.47b05b1a9609e27246898478bc3dc5ad?rik=EYTJ7VM4PKfc4Q&pid=ImgRaw&r=0" alt="" />
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button 
+                type="button" 
+                class="inline-flex p-1 text-black transition-all duration-200 border border-black lg:hidden focus:bg-gray-100 hover:bg-gray-100"
+                onclick="toggleMenu()"
+            >
+                <!-- Toggle Menu Icon -->
+                <svg id="menu-icon-open" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+                <svg id="menu-icon-close" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+
+            <!-- Desktop Menu -->
+            <div class="hidden ml-auto lg:flex lg:items-center lg:justify-center lg:space-x-10">
+                @if (request()->is('ecommerce'))
+                    <a href="#feauters" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Features</a>
+                @else
+                    <a href="/ecommerce" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Home</a>
+                    <a href="/ecommerce#feauters" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Features</a>
+                @endif
+                <a href="{{ route('ecommerce.about') }}" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">About Us</a>
+                <a href="{{ route('ecommerce.shop') }}" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Shopping</a>
+                @if (request()->is('ecommerce'))
+                    <a href="#store" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Store</a>
+                @else
+                    <a href="/ecommerce#store" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Store</a>
+                @endif
+                <div class="w-px h-5 bg-black/20"></div>
+
+                <!-- Cart - Visible on larger screens, hidden on mobile -->
+                <a href="{{ route('cart') }}" class="fixed bottom-24 right-16 text-gray-300 m-0 p-0 hidden lg:block">
+                    <span id="cart-count" class="absolute bottom-14 -right-7 z-10 font-bold text-white text-xl rounded-full bg-red-500 w-8 h-8 flex items-center justify-center">
+                        {{ count((array) session('cart')) }}
+                    </span>
+                    <i class="fas fa-shopping-cart absolute bottom-10 right-3 z-0 w-6 h-6 text-5xl text-blue-400 dark:text-white"></i>
+                </a>
+
+                @if (Auth::check())
+                    <!-- Messages - Visible on larger screens, hidden on mobile -->
+                    <a href="{{ route('messages.inbox') }}" class="fixed bottom-10 right-14 text-gray-300 m-0 p-0 hidden lg:block">
+                        <i class="fas fa-comments absolute bottom-5 right-3 w-6 h-6 text-blue-400 text-3xl z-0 shadow-2xl dark:text-white"></i>
                     </a>
-                </div>
+                @endif
 
-                <button type="button" class="inline-flex p-1 text-black transition-all duration-200 border border-black lg:hidden focus:bg-gray-100 hover:bg-gray-100">
-                    <!-- Menu open: "hidden", Menu closed: "block" -->
-                    <svg class="block w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
+                @if (Auth::check())
+                    <div class="hidden sm:flex sm:items-center sm:ml-6">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                    <i class="fa-solid text-green-500 text-xl fa-user"></i>
+                                    <div class="ml-1">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </button>
+                            </x-slot>
 
-                    <!-- Menu open: "block", Menu closed: "hidden" -->
-                    <svg class="hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
+                            <x-slot name="content">
+                                @if (Auth::user()->role === 'doctor')
+                                    <x-dropdown-link :href="route('orders.index')">
+                                        {{ __('Orders') }}
+                                    </x-dropdown-link>
+                                @elseif (Auth::user()->role === 'admin' || Auth::user()->role === 'staff')
+                                    <x-dropdown-link :href="route('dashboard')">
+                                        {{ __('Dashboard') }}
+                                    </x-dropdown-link>
+                                @endif
 
-                <div class="hidden ml-auto lg:flex lg:items-center lg:justify-center lg:space-x-10">
-                    <a href="#feauters" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Features </a>
+                                <x-dropdown-link :href="route('profile.edit')">
+                                    {{ __('Profile') }}
+                                </x-dropdown-link>
 
-                    <a href="#" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> About us </a>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault(); this.closest('form').submit();">
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80">Log in</a>
+                @endif
 
-                    <a href="#" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> shoping </a>
-
-                    <a href="#" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Pricing </a>
-
-                    <div class="w-px h-5 bg-black/20"></div>
- <a href="{{ route('cart') }}" class="fixed bottom-10 right-16 text-gray-300 m-0 p-0">
-    <span id="cart-count" class="absolute bottom-4 font-bold z-10 right-0 transform translate-x-1/2 -translate-y-1/2  text-red-500 text-3xl rounded-full  w-10 h-10 flex items-center justify-center">
-        {{ count((array) session('cart')) }}
-    </span>
-    <i class="fas fa-shopping-cart w-6 h-6 text-5xl z-0 text-blue-400 dark:text-white"></i>
-</a>
- <a href="{{ route('cart') }}" class=" text-red-500 m-0 p-0">
-    <span id="cart-count" class="  text-white text-xs rounded-full bg-red-500 w-5 h-5 flex items-center justify-center">
-        {{ count((array) session('cart')) }}
-    </span>
-    <i class="fas fa-shopping-cart w-6 h-6 text-lg text-blue-400 dark:text-white"></i>
-</a>
-
-
-  
-
-                    <a href="{{route('login')}}" title="" class="text-base font-semibold text-black transition-all duration-200 hover:text-opacity-80"> Log in </a>
-
-                    <a href="#" title="" class="inline-flex items-center justify-center px-5 py-2.5 text-base font-semibold text-black border-2 border-black hover:bg-black hover:text-white transition-all duration-200 focus:bg-black focus:text-white" role="button"> Try for free </a>
-                </div>
+                <a href="#contact" class="inline-flex items-center justify-center px-5 py-2.5 text-base font-semibold text-black border-2 border-black hover:bg-black hover:text-white transition-all duration-200 focus:bg-black focus:text-white">Contact us</a>
             </div>
         </div>
-    </header>
 
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden lg:hidden">
+            <div class="flex flex-col mt-4 space-y-3 text-sm text-black">
+                @if (request()->is('ecommerce'))
+                    <a href="#feauters" class="block text-gray-500 font-semibold text-2xl transition-all duration-200 hover:text-opacity-80">Features</a>
+                @else
+                    <a href="/ecommerce" class="block text-gray-500 font-semibold text-2xl  transition-all duration-200 hover:text-opacity-80">Home</a>
+                    <a href="/ecommerce#feauters" class="block text-gray-500 font-semibold text-2xl transition-all duration-200 hover:text-opacity-80">Features</a>
+                @endif
+                <a href="{{ route('ecommerce.about') }}" class="block text-gray-500 text-2xl font-semibold transition-all duration-200 hover:text-opacity-80">About Us</a>
+                <a href="{{ route('ecommerce.shop') }}" class="block text-gray-500 text-2xl font-semibold transition-all duration-200 hover:text-opacity-80">Shopping</a>
+                <a href="#contact" class="block text-2xl text-gray-500 font-semibold transition-all duration-200 hover:text-opacity-80">Contact us</a>
+                
+                @if (request()->is('ecommerce'))
+                    <a href="#store" class="block font-semibold text-gray-500 text-2xl transition-all duration-200 hover:text-opacity-80">Store</a>
+                @else
+                    <a href="/ecommerce#store" class="block text-gray-500 text-2xl font-semibold transition-all duration-200 hover:text-opacity-80">Store</a>
+                @endif
+
+                @if (Auth::check())
+                    <div class="mt-4">
+                        <a href="{{ route('profile.edit') }}" class="block text-blue-400 text-2xl font-semibold transition-all duration-200 hover:text-opacity-80">Profile</a>
+                        <a href="{{ route('logout') }}" class="block font-semibold text-blue-400 text-2xl transition-all duration-200 hover:text-opacity-80"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Log Out</a>
+                        <form id="logout-form" method="POST" action="{{ route('logout') }}" class="hidden">
+                            @csrf
+                        </form>
+                    </div>
+                @else
+                    <a href="{{ route('login') }}" class="block text-2xl font-semibold transition-all duration-200 hover:text-opacity-80">Log in</a>
+                @endif
+
+            </div>
+        </div>
+
+        <!-- Mobile Icons for Cart and Messages -->
+        <div class="fixed bottom-28  right-8 flex justify-around lg:hidden">
+            <a href="{{ route('cart') }}" class="text-gray-300">
+                <span id="cart-count" class="absolute bottom-5 -right-3 z-10 font-bold text-white text-xl rounded-full bg-red-500 w-6 h-6 flex items-center justify-center">
+                    {{ count((array) session('cart')) }}
+                </span>
+                <i class="fas fa-shopping-cart text-3xl text-blue-400"></i>
+            </a>
+
+            @if (Auth::check())
+                <a href="{{ route('messages.inbox') }}" class=" absolute top-11 text-gray-300">
+                    <i class="fas fa-comments text-3xl text-blue-400"></i>
+                </a>
+            @endif
+        </div>
+    </div>
+</header>
+
+
+<script>
+    function toggleMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        const openIcon = document.getElementById('menu-icon-open');
+        const closeIcon = document.getElementById('menu-icon-close');
+
+        mobileMenu.classList.toggle('hidden');
+        openIcon.classList.toggle('hidden');
+        closeIcon.classList.toggle('hidden');
+    }
+</script>
+
+@endif
     @yield('content')
 
     @yield('scripts')
@@ -89,7 +204,7 @@
     <div class="px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
         <div class="grid grid-cols-2 md:col-span-3 lg:grid-cols-6 gap-y-16 gap-x-12">
             <div class="col-span-2 md:col-span-3 lg:col-span-2 lg:pr-8">
-                <img class="w-auto h-9" src="https://cdn.rareblocks.xyz/collection/celebration/images/logo.svg" alt="" />
+                <img class="w-auto h-9" src="https://th.bing.com/th/id/R.47b05b1a9609e27246898478bc3dc5ad?rik=EYTJ7VM4PKfc4Q&pid=ImgRaw&r=0" alt="" /><span>pharmax-shop</span>
 
                 <p class="text-base leading-relaxed text-gray-600 mt-7">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.</p>
 
@@ -142,21 +257,22 @@
                 <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Company</p>
 
                 <ul class="mt-6 space-y-4">
-                    <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> About </a>
+                     <li>
+                        <a href="/ecommerce" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Home </a>
+                    </li>
+                     <li>
+                        <a  href="{{ route('ecommerce.about') }}" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> About </a>
                     </li>
 
                     <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Features </a>
+                        <a href="/ecommerce#feauters" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Features </a>
                     </li>
 
                     <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Works </a>
+                        <a href="/ecommerc#contact" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> contact us </a>
                     </li>
 
-                    <li>
-                        <a href="#" title="" class="flex text-base text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"> Career </a>
-                    </li>
+                  
                 </ul>
             </div>
 
@@ -182,18 +298,13 @@
                 </ul>
             </div>
 
-            <div class="col-span-2 md:col-span-1 lg:col-span-2 lg:pl-8">
-                <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Subscribe to newsletter</p>
-
-                <form action="#" method="POST" class="mt-6">
-                    <div>
-                        <label for="email" class="sr-only">Email</label>
-                        <input type="email" name="email" id="email" placeholder="Enter your email" class="block w-full p-4 text-black placeholder-gray-500 transition-all duration-200 bg-white border border-gray-200 rounded-md focus:outline-none focus:border-blue-600 caret-blue-600" />
-                    </div>
-
-                    <button type="submit" class="inline-flex items-center justify-center px-6 py-4 mt-3 font-semibold text-white transition-all duration-200 bg-gradient-to-r from-fuchsia-600 to-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700">Subscribe</button>
-                </form>
-            </div>
+         <div class="col-span-2 md:col-span-1 lg:col-span-2 lg:pl-8">
+                <p class="text-sm font-semibold tracking-widest text-gray-400 uppercase">Popular Categories</p>
+                <p class="text-xs mt-9 w-64 font-semibold tracking-widest text-gray-400 uppercase"> Get best categories from our store</p>
+                    <a href="/ecommerce#category" class="inline-flex items-center justify-center px-6 py-2 cursor-pointer mt-4 font-semibold text-white transition-all duration-200 bg-gradient-to-r from-fuchsia-600 to-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700">Get best</a>
+               
+              
+            </div> 
         </div>
 
         <hr class="mt-16 mb-10 border-gray-200" />
