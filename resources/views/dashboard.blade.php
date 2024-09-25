@@ -59,4 +59,10 @@
         </div>
         @include('medicines.index')
     </div>
+    {{-- <ul>
+    @foreach($notifications as $notification)
+        <li>{{ $notification->data['message'] }}</li>
+    @endforeach
+</ul> --}}
+
 </x-app-layout>

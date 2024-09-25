@@ -10,6 +10,15 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 class DashboardController extends Controller
 {
+    //         public function showDashboard()
+    //     {
+    //         if (Auth::check()) {
+    //     $notifications = Auth::user()->notifications;
+    //     return view('admin.dashboard', compact('notifications'));
+    // } else {
+    //     return 'User is not logged in';
+    // }
+    //     }
     public function index(Request $request)
     {
         // Get counts for total medicines and suppliers
@@ -54,4 +63,6 @@ class DashboardController extends Controller
         // Pass the data to the view
         return view('dashboard', compact('totalMedicines', 'totalSuppliers', 'expiringSoon','expiredMedicinesCount', 'medicines', 'categories','totalprice','totalsales'));
     }
+
+    
 }

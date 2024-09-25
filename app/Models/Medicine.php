@@ -20,4 +20,9 @@ class Medicine extends Model
     {
         return $this->belongsTo(Supplier::class);
     }
+
+    // public function isLowStock()
+    // {
+    //     return $this->quantity < 3;
+    // }
 }

@@ -15,14 +15,14 @@
             <div class="grid items-center grid-cols-1 gap-12 lg:grid-cols-2">
                 <div>
                     <h1 class="text-4xl font-bold text-black sm:text-6xl lg:text-7xl">
-                        Collaborate remotely, with
+                        Wellness Delivered
                         <div class="relative inline-flex">
                             {{-- <span class="absolute inset-x-0 bottom-0 border-b-[30px] border-[#4ADE80]"></span> --}}
-                            <h1 class="relative text-4xl font-bold text-black sm:text-6xl lg:text-7xl">Postcrafts.</h1>
+                            <h1 class="relative text-4xl font-bold text-black sm:text-6xl lg:text-7xl">to Your Doorstep!</h1>
                         </div>
                     </h1>
 
-                    <p class="mt-8 text-base text-black sm:text-xl">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat.</p>
+                    <p class="mt-8 text-base text-black sm:text-xl">In today’s fast-paced world, prioritizing your health should be effortless. At WU pharmacy, we believe that accessing the medications and wellness products you need should be as simple as a click. Our user-friendly online platform offers a wide range of prescription medications, over-the-counter products, and health essentials, all conveniently delivered to your doorstep.</p>
 
                     <div class="mt-10 sm:flex sm:items-center sm:space-x-8">
                         {{-- <a href="#" title="" class="inline-flex items-center justify-center px-10 py-4 text-base font-semibold text-white  duration-200  hover:bg-orange-600 focus:bg-orange-600  bg-orange-600" role="button"> Start exploring </a> --}}
@@ -175,8 +175,8 @@
             </div>
 
             <div class="flex flex-col items-start xl:px-16">
-                <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Grow business with Celebration.</h2>
-                <p class="mt-4 text-base leading-relaxed text-gray-600">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Your Prescription, Our Priority!</h2>
+                <p class="mt-4 text-base leading-relaxed text-gray-600">With a dedicated team of licensed pharmacists available for consultation and guidance, you can trust that your health is in good hands.</p>
 
                 <a href="#" title="" class="inline-flex items-center justify-center px-5 py-4 mt-8 text-base font-semibold text-white transition-all duration-200 rounded-md hover:opacity-90 focus:opacity-90 lg:mt-auto bg-gradient-to-r from-fuchsia-600 to-blue-600" role="button">
                     Get started now
@@ -258,8 +258,8 @@
             </div>
 
             <div class="md:order-1">
-                <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Grow business with Celebration.</h2>
-                <p class="mt-4 text-base leading-relaxed text-gray-600">Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit. Exercitation veniam consequat sunt nostrud amet.</p>
+                <h2 class="text-3xl font-bold leading-tight text-black sm:text-4xl lg:text-5xl">Bringing the Pharmacy to You!</h2>
+                <p class="mt-4 text-base leading-relaxed text-gray-600">Experience the future of pharmacy shopping—secure, reliable, and tailored to fit your lifestyle. Because when it comes to your health, convenience matters!</p>
 
                 <a href="#" title="" class="inline-flex items-center justify-center px-8 py-3 mt-8 text-base font-semibold text-white transition-all duration-200 bg-gradient-to-r from-fuchsia-600 to-blue-600 rounded-md hover:bg-blue-700 focus:bg-blue-700" role="button"> Start exploring </a>
             </div>
