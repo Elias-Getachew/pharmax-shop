@@ -3,40 +3,23 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class UpdateOrderItemsForeignKey extends Migration
+return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
-        Schema::table('order_items', function (Blueprint $table) {
-            // First, drop the existing foreign key constraint
-            $table->dropForeign(['medicine_id']);
-
-            // Now, recreate the foreign key with ON DELETE CASCADE
-            $table->foreign('medicine_id')
-                  ->references('id')->on('medicines')
-                  ->onDelete('cascade');  // Add ON DELETE CASCADE
+        // Migration for Order Items Table
+        Schema::create('order_items', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('order_id')->constrained('orders');
+            $table->foreignId('medicine_id')->constrained('medicines');
+            $table->integer('quantity');
+            $table->decimal('price', 10, 2); // Add price for each medicine
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::table('order_items', function (Blueprint $table) {
-            // Revert the foreign key back to its original form
-            $table->dropForeign(['medicine_id']);
-
-            $table->foreign('medicine_id')
-                  ->references('id')->on('medicines')
-                  ->onDelete('restrict');  // or whatever it was before
-        });
+        Schema::dropIfExists('order_items');
     }
-}
+};

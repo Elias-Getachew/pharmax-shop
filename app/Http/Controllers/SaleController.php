@@ -192,17 +192,5 @@ public function destroy(Request $request, Sale $sale)
         return redirect()->route('sales.index')->with('success', 'Sale updated successfully!');
     }
 
-//     public function updateStock($medicineId, $quantitySold)
-// {
-//     $medicine = Medicine::find($medicineId);
-//     $medicine->quantity -= $quantitySold;
-//     $medicine->save();
 
-//     // Check if the stock is low and notify the admin
-//     if ($medicine->isLowStock()) {
-//         // Assuming admin is a User model or change according to your setup
-//         $admin = User::where('role', 'admin')->first();
-//         $admin->notify(new LowStockNotification($medicine));
-//     }
-// }
 }
