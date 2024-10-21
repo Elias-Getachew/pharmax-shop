@@ -1,24 +1,25 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\MedicineController;
-use App\Http\Controllers\SupplierController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\StaffController;
-use App\Http\Controllers\SaleController;
-use App\Http\Controllers\PurchaseController;
-use App\Http\Controllers\AnalyticsController;
-use App\Http\Controllers\ChartController;
-use App\Http\Controllers\OrderController; // Add this if you have an OrderController
-use App\Http\Controllers\StaffOrderController;
-use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\EcommerceController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\SaleController;
+use App\Http\Controllers\ChartController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\MedicineController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EcommerceController;
+use App\Http\Controllers\StaffOrderController;
+use App\Http\Controllers\OrderController; // Add this if you have an OrderController
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,6 +47,7 @@ Route::get('/', function () {
  Route::post('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
  Route::patch('/update-cart', [CartController::class, 'update'])->name('update_cart');
  Route::delete('/remove-from-cart', [CartController::class, 'remove'])->name('remove_from_cart');
+ Route::get('/ecommerce/news', [EcommerceController::class, 'newsIndex'])->name('ecommerce.news.index');
 
 // Authentication and Verification Routes
 Route::get('/dashboard', [DashboardController::class, 'index'])
@@ -80,30 +82,10 @@ Route::get('/receipt/{orderCode}', [PaymentController::class, 'downloadReceipt']
 // Admin Routes
 Route::middleware(['auth', 'role:admin,'])->group(function () {
 
-//         ///ecommerce 
-//  Route::get('/ecommerce', [EcommerceController::class, 'index'])->name('ecommerce.index');
-//   Route::get('/ecommerce/shop', [EcommerceController::class, 'shop'])->name('ecommerce.shop');
-//  Route::get('/ecommerce/category/{category}', [EcommerceController::class, 'show'])->name('ecommerce.category.show');
-//  Route::get('cart', [CartController::class, 'cart'])->name('cart');
-//  Route::post('add-to-cart/{id}', [CartController::class, 'addToCart'])->name('add_to_cart');
-//  Route::patch('/update-cart', [CartController::class, 'update'])->name('update_cart');
-//  Route::delete('/remove-from-cart', [CartController::class, 'remove'])->name('remove_from_cart');
+    Route::get('/admin/news/create', [NewsController::class, 'create'])->name('news.create');
+    Route::post('/admin/news/store', [NewsController::class, 'store'])->name('news.store');
+    
 
-// // Route to handle the checkout process
-// Route::post('/checkout', [CartController::class, 'checkout'])->name('checkout');
-
-// // Route for Chapa payment callback
-// Route::get('/payment/callback/{reference}', [CartController::class, 'callback'])->name('cart.callback');
-// Route::post('/payment/callback/{reference}', [CartController::class, 'callback'])->name('cart.callback');
-
-// Route::get('/payment/success/{reference}', [CartController::class, 'paymentSuccess'])->name('cart.payment.success');
-// Route::get('/receipt/{orderCode}', [PaymentController::class, 'downloadReceipt'])->name('cart.payment.receipt');
-
-
-
-
-// Medicine Routes
-    // Route::get('/medicines', [MedicineController::class, 'index'])->name('medicines.index');
     Route::get('/medicines/create', [MedicineController::class, 'create'])->name('medicines.create');
     Route::post('/medicines', [MedicineController::class, 'store'])->name('medicines.store');
     Route::get('/medicines/{medicine}/edit', [MedicineController::class, 'edit'])->name('medicines.edit');
@@ -213,14 +195,6 @@ Route::get('/reports/{type}', [ReportController::class, 'report'])->name('report
     Route::delete('/purchases/{purchase}', [PurchaseController::class, 'destroy'])->name('purchases.destroy');
 });
 
-// // Order Routes (for doctors and staff)
-// Route::middleware(['auth', 'role:doctor|staff'])->group(function () {
-//     Route::get('orders', [OrderController::class, 'index'])->name('orders.index');
-//     Route::get('orders/create', [OrderController::class, 'create'])->name('orders.create');
-//     Route::post('orders', [OrderController::class, 'store'])->name('orders.store');
-//     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
-//     Route::put('/orders/{order}', [OrderController::class, 'update'])->name('orders.update');
-//     Route::delete('/orders/{order}', [OrderController::class, 'destroy'])->name('orders.destroy');
-// });
+
 
 require __DIR__.'/auth.php';

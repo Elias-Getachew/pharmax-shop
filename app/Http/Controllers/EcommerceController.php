@@ -1,22 +1,23 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Medicine;
+use App\Models\News;
 use App\Models\Category;
+use App\Models\Medicine;
 use Illuminate\Http\Request;
 
 class EcommerceController extends Controller
 {
     public function index(Request $request)
     {
-        
-           $medicines = Medicine::where('expiry_date', '>', now())->paginate(6);
-     
- $categories = Category::with(['medicines' => function($query) {
-        $query->where('expiry_date', '>', now())->take(4); // Limit to 4 medicines per category
-    }])->latest()->paginate(3);
+        $medicines = Medicine::where('expiry_date', '>', now())->paginate(6);
+        $categories = Category::with(['medicines' => function($query) {
+            $query->where('expiry_date', '>', now())->take(4); 
+        }])->latest()->paginate(3);
 
-        return view('ecommerce.index', compact('medicines', 'categories'));
+        $news = News::latest()->take(5)->get(); // Fetch latest 5 news
+
+        return view('ecommerce.index', compact('medicines', 'categories', 'news'));
     }
 
  public function show(Category $category)
@@ -56,6 +57,12 @@ class EcommerceController extends Controller
  public function about(Category $category)
     {
         return view('ecommerce.components.aboutus');
+    }
+
+    public function newsIndex()
+    {
+        $news = News::all();
+        return view('ecommerce.news.index', compact('news'));
     }
 
     
